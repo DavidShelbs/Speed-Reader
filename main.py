@@ -1,6 +1,7 @@
 import time
 import os
 import pygame
+from time import sleep
 
 i = 0
 SPEED = 400
@@ -14,13 +15,22 @@ def main():
     global SPEED
     global wordsPerSecond
 
-    while textDoc[i] != " ":
-        word = word + textDoc[i]
-        i = i + 1
+    try:
+        while textDoc[i] != " ":
+            word = word + textDoc[i]
+            i = i + 1
+            if textDoc[i] == "\n":
+                i = i + 1
 
-    time.sleep(1)
+    except:
+        word = "END OF FILE"
+
+    print "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"    
     print word
+    sleep(0.12)
     i = i + 1
-    main()
+
+    if word != "END OF FILE":
+        main()
 
 main()
