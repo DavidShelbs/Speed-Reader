@@ -25,7 +25,7 @@ def main():
     except:
         word = "END OF FILE"
 
-    print "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"    
+    print "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
     print word
     sleep(0.12)
     i = i + 1
