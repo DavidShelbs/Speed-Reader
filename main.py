@@ -58,7 +58,7 @@ def main():
     except:
         #don't error out at the end of the file
         # word = "FIN"
-        hi = "hi"
+        i = i + 1
 
     #create a textsurface
     textsurface = speedFont.render(word, 1, (255, 255, 255))
