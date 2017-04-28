@@ -16,6 +16,7 @@ i = 0
 #open the file we want to read
 with open("meinkampf.txt", "r") as meinKampf:
     textDoc = meinKampf.read()
+    textDoc += " @FIN@"
 
 # doc = docx.Document('Essay 3.docx')
 
@@ -57,30 +58,41 @@ def main():
 
     except:
         #don't error out at the end of the file
-        # word = "FIN"
-        i = i + 1
+        word = "FIN"
 
-    #create a textsurface
-    textsurface = speedFont.render(word, 1, (255, 255, 255))
+        #create a textsurface
+        textsurface = speedFont.render(word, 1, (255, 255, 255))
 
-    #calculate the center of the word
-    x = ((SCREEN_WIDTH / 2) * SCALE - (textsurface.get_rect().width / 2))
+        #calculate the center of the word
+        x = ((SCREEN_WIDTH / 2) * SCALE - (textsurface.get_rect().width / 2))
 
-    #display the text
-    screen.blit(textsurface, (x, SCREEN_HEIGHT * SCALE / 5))
-    pygame.display.flip()
-
-    #display the word in a readable manner in the console window
-    if debug:
-        print "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
-        print word
-
-    #wait before going again
-    sleep(0.12)
-    i = i + 1
+        #display the text
+        screen.blit(textsurface, (x, SCREEN_HEIGHT * SCALE / 5))
+        pygame.display.flip()
+        sleep(5)
 
     #repeat until the end of the file
     if word != "FIN":
+        #create a textsurface
+        textsurface = speedFont.render(word, 1, (255, 255, 255))
+
+        #calculate the center of the word
+        x = ((SCREEN_WIDTH / 2) * SCALE - (textsurface.get_rect().width / 2))
+
+        #display the text
+        screen.blit(textsurface, (x, SCREEN_HEIGHT * SCALE / 5))
+        pygame.display.flip()
+
+        #display the word in a readable manner in the console window
+        if debug:
+            print "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
+            print word
+
+        #wait before going again
+        sleep(0.12)
+        i = i + 1
+
+        #loop through program
         main()
 
 #call main method
