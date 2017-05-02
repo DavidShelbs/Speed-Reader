@@ -25,8 +25,11 @@ with open("meinkampf.txt", "r") as meinKampf:
 
 def main():
     running = True
+    clock = pygame.time.Clock()
 
     while running:
+        clock.tick(60)
+
         #set variables and get global variables
         global i
         global SCREEN_WIDTH
@@ -34,13 +37,13 @@ def main():
         global SCALE
         global color
 
-        debug = True
+        debug = False
 
-        corner1 = (28,18)  #Top Left corner of button 1
-        corner2 = (56,18)  #Top Left corner of button 2
+        corner1 = (25, SCREEN_HEIGHT * SCALE - 75)  #Top Left corner of button 1
+        corner2 = (SCREEN_WIDTH * SCALE - 125, SCREEN_HEIGHT * SCALE - 75)  #Top Left corner of button 2
 
         image_length = 100 #length of the buttons
-        image_height = 100 #height of the buttons
+        image_height = 50 #height of the buttons
 
         #initialize pygame and set display for the window
         pygame.init()
@@ -48,10 +51,15 @@ def main():
         pygame.display.set_caption("Speed Reader")
         screen = pygame.display.set_mode((SCREEN_WIDTH * SCALE, SCREEN_HEIGHT * SCALE))
 
+        #draw lines on the screen
         pygame.draw.line(screen, (255, 255, 255), (0, SCREEN_HEIGHT * SCALE / 5 - 30), (SCREEN_WIDTH * SCALE, SCREEN_HEIGHT * SCALE / 5 - 30), 1)
         pygame.draw.line(screen, (255, 255, 255), (0, SCREEN_HEIGHT * SCALE / 5 + 30 + 40), (SCREEN_WIDTH * SCALE, SCREEN_HEIGHT * SCALE / 5 + 30 + 40), 1)
         pygame.draw.line(screen, (255, 255, 255), (SCREEN_WIDTH * SCALE / 2, SCREEN_HEIGHT * SCALE / 5 - 30), (SCREEN_WIDTH * SCALE / 2, SCREEN_HEIGHT * SCALE / 5 - 20), 1)
         pygame.draw.line(screen, (255, 255, 255), (SCREEN_WIDTH * SCALE / 2, SCREEN_HEIGHT * SCALE / 5 + 30 + 40), (SCREEN_WIDTH * SCALE / 2, SCREEN_HEIGHT * SCALE / 5 + 20 + 40), 1)
+
+        #draw the buttons
+        pygame.draw.rect(screen, (255, 255, 255), (25, SCREEN_HEIGHT * SCALE - 75, 100, 50), 1)
+        pygame.draw.rect(screen, (255, 255, 255), (SCREEN_WIDTH * SCALE - 125, SCREEN_HEIGHT * SCALE - 75, 100, 50), 1)
 
         #initialize font
         pygame.font.init()
@@ -104,20 +112,24 @@ def main():
             i = i + 1
 
         for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+                sys.exit();
             if event.type == MOUSEBUTTONDOWN:
                 if event.button == 1:
                     mouse_x, mouse_y = event.pos
                     if (mouse_x >= corner1[0]) and (mouse_x <= corner1[0]+image_length) and (mouse_y >= corner1[1]) and (mouse_y <= corner1[1]+image_height):
+                        color = (255, 0, 0)
                         print ("Button one is selected")
                         button1=True
                         button2=False
                     elif (mouse_x >= corner2[0]) and (mouse_x <= corner2[0]+image_length) and (mouse_y >= corner2[1]) and (mouse_y <= corner2[1]+image_height):
+                        color = (0, 0, 255)
                         print ("Button two is selected")
                         button1=False
                         button2=True
                     else:
                         print ("That's not a button")
-                        color = (255, 0, 0)
                         button1=False
                         button2=False
 
