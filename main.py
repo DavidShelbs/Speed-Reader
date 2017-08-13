@@ -5,7 +5,9 @@ from time import sleep
 import sys
 from pygame.locals import *
 import tkFileDialog as filedialog
-import Tkinter as tk
+from Tkinter import *
+import Tkinter as ttk
+from ttk import *
 
 # import docx
 
@@ -19,18 +21,7 @@ color = (255, 255, 255)
 #set variables
 i = 0
 
-root = tk.Tk()
-root.withdraw()
-path = filedialog.askopenfilename()
-
-#open the file we want to read
-with open(path, "r") as textFile:
-    textDoc = textFile.read()
-    textDoc += " @FIN@"
-
-# doc = docx.Document('Essay 3.docx')
-
-def main():
+def main(textDoc):
 
     running = True
     clock = pygame.time.Clock()
@@ -127,7 +118,7 @@ def main():
 
                 #display the text
                 screen.blit(textsurface, (x, SCREEN_HEIGHT * SCALE / 5))
-                screen.blit(wpmsurface, (newx, SCREEN_HEIGHT * SCALE - 175))
+                screen.blit(wpmsurface, (newx, SCREEN_HEIGHT * SCALE - 200))
 
                 pygame.display.flip()
 
@@ -136,7 +127,7 @@ def main():
                     print "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
                     print word
 
-                #wait before going agai
+                #wait before going again
 
                 sleep(speed)
                 i = i + 1
@@ -156,19 +147,65 @@ def main():
 
                         elif (mouse_x >= corner3[0]) and (mouse_x <= corner3[0]+image_length) and (mouse_y >= corner3[1]) and (mouse_y <= corner3[1]+image_height):
                             speed = speed + 0.02
-                            print "Speed", speed
+                            if debug:
+                                print "Speed", speed
 
                         elif (mouse_x >= corner4[0]) and (mouse_x <= corner4[0]+image_length) and (mouse_y >= corner4[1]) and (mouse_y <= corner4[1]+image_height):
                             speed = speed - 0.02
-                            print "Speed", speed
+                            if debug:
+                                print "Speed", speed
 
                         else:
                             color = (255, 255, 255)
-                            print ("That's not a button")
+                            if debug:
+                                print ("That's not a button")
                             button1=False
                             button2=False
 
-                #loop through program
+def pasteorsearch(pors):
+    #print(pors)
+    if pors == 'Search':
+        os.system('cls')
 
-#call main method
-main()
+        #create open filedialog
+        root = ttk.Tk()
+        root.withdraw()
+        path = filedialog.askopenfilename()
+
+        #open the file we want to read
+        with open(path, "r") as textFile:
+            textDoc = textFile.read()
+            textDoc += " @FIN@"
+        main(textDoc)
+
+#paste or get from document
+root = Tk()
+root.title("Speed Reader")
+
+# Add a grid
+mainframe = Frame(root)
+mainframe.grid(column=0,row=0, sticky=(N,W,E,S) )
+mainframe.columnconfigure(0, weight = 1)
+mainframe.rowconfigure(0, weight = 1)
+mainframe.pack(pady = 25, padx = 50)
+
+# Create a Tkinter variable
+tkvar = StringVar(root)
+
+# Dictionary with options
+choices = {'Paste', 'Search', 'Choose Value'}
+popupMenu = OptionMenu(mainframe, tkvar, *choices)
+Label(mainframe, text="Would you like to paste your desired text or search it from your device?").grid(row = 1, column = 1)
+popupMenu.grid(row = 2, column = 1)
+tkvar.set('Choose Value') # set the default option
+button = ttk.Button(mainframe, text ="Hello", command = lambda: pasteorsearch(tkvar.get()))
+button.grid(row = 3, column = 1)
+
+# on change dropdown value
+# def change_dropdown(*args):
+    # print(tkvar.get())
+
+# link function to change dropdown
+# tkvar.trace('w', change_dropdown)
+
+root.mainloop()
