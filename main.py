@@ -19,7 +19,7 @@ color = (255, 255, 255)
 #set variables
 i = 0
 
-def main(textDoc):
+def speedreader(textDoc):
 
     running = True
     clock = pygame.time.Clock()
@@ -175,43 +175,66 @@ def pasteorsearch(pors):
         with open(path, "r") as textFile:
             textDoc = textFile.read()
             textDoc += " @FIN@"
-        main(textDoc)
+        speedreader(textDoc)
 
     elif pors == 'Paste':
-        uAns = sys.stdin.readlines()
-        uAns = " ".join(uAns)
-        uAns += " @FIN@"
-        print (uAns)
-        main(uAns)
+        root = ttk.Tk()
+
+        mainframe = Frame(root)
+        # mainframe.grid(column = 0, row = 0, sticky = (N, W, E, S ))
+        # mainframe.columnconfigure(0, weight = 1)
+        # mainframe.rowconfigure(0, weight = 1)
+        # mainframe.pack(pady = 25, padx = 50)
+
+        textBox = Text(root, height = 25, width = 40)
+        sBar = Scrollbar(root)
+        sBar.config(command = textBox.yview)
+        textBox.config(yscrollcommand = sBar.set)
+        textBox.grid(row = 1, column = 1)
+
+        button = ttk.Button(root, text = "Select", command = lambda: speedreader(textBox.get(0.0, END)))
+        button.grid(row = 2, column = 1)
+
+        textBox.focus_force()
+        mainloop()
+
+        # uAns = sys.stdin.readlines()
+        # uAns = " ".join(uAns)
+        # uAns += " @FIN@"
+        # print (uAns)
+        # main(uAns)
 
 #paste or get from document
-root = Tk()
-root.title("Speed Reader")
+def main():
+    root = Tk()
+    root.title("Speed Reader")
 
-# Add a grid
-mainframe = Frame(root)
-mainframe.grid(column = 0,row = 0, sticky = (N, W, E, S ))
-mainframe.columnconfigure(0, weight = 1)
-mainframe.rowconfigure(0, weight = 1)
-mainframe.pack(pady = 25, padx = 50)
+    # Add a grid
+    mainframe = Frame(root)
+    mainframe.grid(column = 0,row = 0, sticky = (N, W, E, S ))
+    mainframe.columnconfigure(0, weight = 1)
+    mainframe.rowconfigure(0, weight = 1)
+    mainframe.pack(pady = 25, padx = 50)
 
-# Create a Tkinter variable
-tkvar = StringVar(root)
+    # Create a Tkinter variable
+    tkvar = StringVar(root)
 
-# Dictionary with options
-choices = {'Paste', 'Search', 'Choose Value'}
-popupMenu = OptionMenu(mainframe, tkvar, *choices)
-Label(mainframe, text="Would you like to paste or search the device for your desired text?").grid(row = 1, column = 1)
-popupMenu.grid(row = 2, column = 1)
-tkvar.set('Choose Value') # set the default option
-button = ttk.Button(mainframe, text ="Select", command = lambda: pasteorsearch(tkvar.get()))
-button.grid(row = 3, column = 1)
+    # Dictionary with options
+    choices = {'Paste', 'Search', 'Choose Value'}
+    popupMenu = OptionMenu(mainframe, tkvar, *choices)
+    Label(mainframe, text="Would you like to paste or search the device for your desired text?").grid(row = 1, column = 1)
+    popupMenu.grid(row = 2, column = 1)
+    tkvar.set('Choose Value') # set the default option
+    button = ttk.Button(mainframe, text ="Select", command = lambda: pasteorsearch(tkvar.get()))
+    button.grid(row = 3, column = 1)
 
-# on change dropdown value
-# def change_dropdown(*args):
-    # print(tkvar.get())
+    # on change dropdown value
+    # def change_dropdown(*args):
+        # print(tkvar.get())
 
-# link function to change dropdown
-# tkvar.trace('w', change_dropdown)
+    # link function to change dropdown
+    # tkvar.trace('w', change_dropdown)
 
-root.mainloop()
+    root.mainloop()
+
+main()
