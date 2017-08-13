@@ -9,8 +9,6 @@ from Tkinter import *
 import Tkinter as ttk
 from ttk import *
 
-# import docx
-
 #set constant variables
 SCREEN_WIDTH = 144
 SCREEN_HEIGHT = 256
@@ -32,6 +30,7 @@ def main(textDoc):
     while True:
         clock.tick(60)
         if running:
+
             #set variables and get global variables
             global i
             global SCREEN_WIDTH
@@ -178,13 +177,20 @@ def pasteorsearch(pors):
             textDoc += " @FIN@"
         main(textDoc)
 
+    elif pors == 'Paste':
+        uAns = sys.stdin.readlines()
+        uAns = " ".join(uAns)
+        uAns += " @FIN@"
+        print (uAns)
+        main(uAns)
+
 #paste or get from document
 root = Tk()
 root.title("Speed Reader")
 
 # Add a grid
 mainframe = Frame(root)
-mainframe.grid(column=0,row=0, sticky=(N,W,E,S) )
+mainframe.grid(column = 0,row = 0, sticky = (N, W, E, S ))
 mainframe.columnconfigure(0, weight = 1)
 mainframe.rowconfigure(0, weight = 1)
 mainframe.pack(pady = 25, padx = 50)
@@ -195,10 +201,10 @@ tkvar = StringVar(root)
 # Dictionary with options
 choices = {'Paste', 'Search', 'Choose Value'}
 popupMenu = OptionMenu(mainframe, tkvar, *choices)
-Label(mainframe, text="Would you like to paste your desired text or search it from your device?").grid(row = 1, column = 1)
+Label(mainframe, text="Would you like to paste or search the device for your desired text?").grid(row = 1, column = 1)
 popupMenu.grid(row = 2, column = 1)
 tkvar.set('Choose Value') # set the default option
-button = ttk.Button(mainframe, text ="Hello", command = lambda: pasteorsearch(tkvar.get()))
+button = ttk.Button(mainframe, text ="Select", command = lambda: pasteorsearch(tkvar.get()))
 button.grid(row = 3, column = 1)
 
 # on change dropdown value
