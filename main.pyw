@@ -54,7 +54,7 @@ def speedreader(textDoc):
             #initialize pygame and set display for the window
             pygame.init()
             os.environ['SDL_VIDEO_CENTERED'] = '1'
-            pygame.display.set_caption("Speed Reader")
+            pygame.display.set_caption("Rollick Reader")
             pygame.display.set_icon(rbLogo)
             screen = pygame.display.set_mode((SCREEN_WIDTH * SCALE, SCREEN_HEIGHT * SCALE))
 
@@ -192,7 +192,7 @@ def pasteorsearch(pors):
 
     elif pors == 'Paste':
         root = ttk.Tk()
-        root.title("Speed Reader")
+        root.title("Rollick Reader")
         # mainframe = Frame(root)
         # mainframe.grid(column = 0, row = 0, sticky = (N, W, E, S ))
         # mainframe.columnconfigure(0, weight = 1)
@@ -217,11 +217,56 @@ def pasteorsearch(pors):
         # print (uAns)
         # main(uAns)
 
-#paste or get from document
 def main():
+    pygame.init()
+    os.environ['SDL_VIDEO_CENTERED'] = '1'
+    pygame.display.set_caption("Rollick Reader")
+    pygame.display.set_icon(pygame.image.load('rollickboonlogo.jpg'))
+    screen = pygame.display.set_mode((SCREEN_WIDTH * SCALE, SCREEN_HEIGHT * SCALE))
+
+    pygame.font.init()
+    startFont = pygame.font.SysFont('Helvetica', 30)
+
+    #create a textsurface
+    starttextsurface = startFont.render("Welcome", 1, (color))
+    starttextsurface1 = startFont.render("to", 1, (color))
+    starttextsurface2 = startFont.render("Rollick", 1, (color))
+    starttextsurface3 = startFont.render("Reader", 1, (color))
+
+    #calculate the center of the word
+    x = ((SCREEN_WIDTH / 2) * SCALE - (starttextsurface.get_rect().width / 2))
+    x1 = ((SCREEN_WIDTH / 2) * SCALE - (starttextsurface1.get_rect().width / 2))
+    x2 = ((SCREEN_WIDTH / 2) * SCALE - (starttextsurface2.get_rect().width / 2))
+    x3 = ((SCREEN_WIDTH / 2) * SCALE - (starttextsurface3.get_rect().width / 2))
+
+    #display the text
+    screen.blit(starttextsurface, (x, SCREEN_HEIGHT * SCALE / 5))
+    screen.blit(starttextsurface1, (x1, SCREEN_HEIGHT * SCALE / 5 + 35))
+    screen.blit(starttextsurface2, (x2, SCREEN_HEIGHT * SCALE / 5 + 70))
+    screen.blit(starttextsurface3, (x3, SCREEN_HEIGHT * SCALE / 5 + 105))
+
+    pygame.display.flip()
+
+    sleep(3)
+
+    starttextsurface = startFont.render("Created by:", 1, (color))
+    starttextsurface1 = startFont.render("David Shelby", 1, (color))
+
+    x = ((SCREEN_WIDTH / 2) * SCALE - (starttextsurface.get_rect().width / 2))
+    x1 = ((SCREEN_WIDTH / 2) * SCALE - (starttextsurface1.get_rect().width / 2))
+
+    screen.blit(starttextsurface, (x, SCREEN_HEIGHT * SCALE / 5 + 205))
+    screen.blit(starttextsurface1, (x1, SCREEN_HEIGHT * SCALE / 5 + 240))
+
+    pygame.display.flip()
+
+    sleep(2)
+
+    pygame.display.quit()
+
     root = Tk()
     root.iconbitmap(default = 'rollickboonlogo.ico')
-    root.title("Speed Reader")
+    root.title("Rollick Reader")
 
     # Add a grid
     mainframe = Frame(root)
