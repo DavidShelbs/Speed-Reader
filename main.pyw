@@ -10,9 +10,9 @@ import Tkinter as ttk
 from ttk import *
 
 #set constant variables
-SCREEN_WIDTH = 144
-SCREEN_HEIGHT = 256
-SCALE = 2
+# SCREEN.current_w
+# SCREEN.current_h
+SCALE = 1
 
 color = (255, 255, 255)
 
@@ -35,28 +35,23 @@ def speedreader(textDoc):
 
             #set variables and get global variables
             global i
-            global SCREEN_WIDTH
-            global SCREEN_HEIGHT
+            # global SCREEN
+            # global SCREEN
             global SCALE
             global color
 
             debug = False
-
-            corner1 = (25, SCREEN_HEIGHT * SCALE - 75)  #Top Left corner of button 1
-            corner2 = (SCREEN_WIDTH * SCALE - 125, SCREEN_HEIGHT * SCALE - 75)  #Top Left corner of button 2
-
-            corner3 = (25, SCREEN_HEIGHT * SCALE - 150)  #Top Left corner of button 1
-            corner4 = (SCREEN_WIDTH * SCALE - 125, SCREEN_HEIGHT * SCALE - 150)  #Top Left corner of button 2
 
             image_length = 100 #length of the buttons
             image_height = 50 #height of the buttons
 
             #initialize pygame and set display for the window
             pygame.init()
+            SCREEN = pygame.display.Info()
             os.environ['SDL_VIDEO_CENTERED'] = '1'
             pygame.display.set_caption("Rollick Reader")
             pygame.display.set_icon(rbLogo)
-            screen = pygame.display.set_mode((SCREEN_WIDTH * SCALE, SCREEN_HEIGHT * SCALE))
+            screen = pygame.display.set_mode((SCREEN.current_w * SCALE, SCREEN.current_h * SCALE))
 
             if color == white:
                 screen.fill(black)
@@ -64,18 +59,24 @@ def speedreader(textDoc):
             if color == black:
                 screen.fill(white)
 
+            corner1 = (25, SCREEN.current_h * SCALE - 75)  #Top Left corner of button 1
+            corner2 = (SCREEN.current_w * SCALE - 125, SCREEN.current_h * SCALE - 75)  #Top Left corner of button 2
+
+            corner3 = (25, SCREEN.current_h * SCALE - 150)  #Top Left corner of button 1
+            corner4 = (SCREEN.current_w * SCALE - 125, SCREEN.current_h * SCALE - 150)  #Top Left corner of button 2
+
             #draw lines on the screen
-            pygame.draw.line(screen, (color), (0, SCREEN_HEIGHT * SCALE / 5 - 30), (SCREEN_WIDTH * SCALE, SCREEN_HEIGHT * SCALE / 5 - 30), 1)
-            pygame.draw.line(screen, (color), (0, SCREEN_HEIGHT * SCALE / 5 + 30 + 40), (SCREEN_WIDTH * SCALE, SCREEN_HEIGHT * SCALE / 5 + 30 + 40), 1)
-            pygame.draw.line(screen, (color), (SCREEN_WIDTH * SCALE / 2, SCREEN_HEIGHT * SCALE / 5 - 30), (SCREEN_WIDTH * SCALE / 2, SCREEN_HEIGHT * SCALE / 5 - 20), 1)
-            pygame.draw.line(screen, (color), (SCREEN_WIDTH * SCALE / 2, SCREEN_HEIGHT * SCALE / 5 + 30 + 40), (SCREEN_WIDTH * SCALE / 2, SCREEN_HEIGHT * SCALE / 5 + 20 + 40), 1)
+            pygame.draw.line(screen, (color), (0, SCREEN.current_h * SCALE / 5 - 30), (SCREEN.current_w * SCALE, SCREEN.current_h * SCALE / 5 - 30), 1)
+            pygame.draw.line(screen, (color), (0, SCREEN.current_h * SCALE / 5 + 30 + 40), (SCREEN.current_w * SCALE, SCREEN.current_h * SCALE / 5 + 30 + 40), 1)
+            pygame.draw.line(screen, (color), (SCREEN.current_w * SCALE / 2, SCREEN.current_h * SCALE / 5 - 30), (SCREEN.current_w * SCALE / 2, SCREEN.current_h * SCALE / 5 - 20), 1)
+            pygame.draw.line(screen, (color), (SCREEN.current_w * SCALE / 2, SCREEN.current_h * SCALE / 5 + 30 + 40), (SCREEN.current_w * SCALE / 2, SCREEN.current_h * SCALE / 5 + 20 + 40), 1)
 
             #draw the buttons
-            pygame.draw.rect(screen, (0, 0, 0), (25, SCREEN_HEIGHT * SCALE - 75, 100, 50), 0)
-            pygame.draw.rect(screen, (255, 255, 255), (SCREEN_WIDTH * SCALE - 125, SCREEN_HEIGHT * SCALE - 75, 100, 50), 0)
+            pygame.draw.rect(screen, (0, 0, 0), (25, SCREEN.current_h * SCALE - 75, 100, 50), 0)
+            pygame.draw.rect(screen, (255, 255, 255), (SCREEN.current_w * SCALE - 125, SCREEN.current_h * SCALE - 75, 100, 50), 0)
 
-            pygame.draw.rect(screen, (255, 0, 0), (25, SCREEN_HEIGHT * SCALE - 150, 100, 50), 0)
-            pygame.draw.rect(screen, (0, 255, 0), (SCREEN_WIDTH * SCALE - 125, SCREEN_HEIGHT * SCALE - 150, 100, 50), 0)
+            pygame.draw.rect(screen, (255, 0, 0), (25, SCREEN.current_h * SCALE - 150, 100, 50), 0)
+            pygame.draw.rect(screen, (0, 255, 0), (SCREEN.current_w * SCALE - 125, SCREEN.current_h * SCALE - 150, 100, 50), 0)
 
             #initialize font
             pygame.font.init()
@@ -86,8 +87,8 @@ def speedreader(textDoc):
             # while i < 6:
             #     i = 5
             #     startsurface = speedFont.render(i, 1, (color))
-            #     newxx = ((SCREEN_WIDTH / 2) * SCALE - (startsurface.get_rect().width / 2))
-            #     screen.blit(startsurface, (newxx, SCREEN_HEIGHT * SCALE / 5))
+            #     newxx = ((SCREEN.current_w / 2) * SCALE - (startsurface.get_rect().width / 2))
+            #     screen.blit(startsurface, (newxx, SCREEN.current_h * SCALE / 5))
             #     pygame.display.flip()
             #     i = i - 1
             #
@@ -109,10 +110,10 @@ def speedreader(textDoc):
                 textsurface = speedFont.render(word, 1, (color))
 
                 #calculate the center of the word
-                x = ((SCREEN_WIDTH / 2) * SCALE - (textsurface.get_rect().width / 2))
+                x = ((SCREEN.current_w / 2) * SCALE - (textsurface.get_rect().width / 2))
 
                 #display the text
-                screen.blit(textsurface, (x, SCREEN_HEIGHT * SCALE / 5))
+                screen.blit(textsurface, (x, SCREEN.current_h * SCALE / 5))
                 pygame.display.flip()
 
             #repeat until the end of the file
@@ -125,12 +126,12 @@ def speedreader(textDoc):
                 wpmsurface = otherSpeedFont.render(str(round(wpm, -1)) + " words per minute", 1, (color))
 
                 #calculate the center of the word
-                x = ((SCREEN_WIDTH / 2) * SCALE - (textsurface.get_rect().width / 2))
-                newx = ((SCREEN_WIDTH / 2) * SCALE - (wpmsurface.get_rect().width / 2))
+                x = ((SCREEN.current_w / 2) * SCALE - (textsurface.get_rect().width / 2))
+                newx = ((SCREEN.current_w / 2) * SCALE - (wpmsurface.get_rect().width / 2))
 
                 #display the text
-                screen.blit(textsurface, (x, SCREEN_HEIGHT * SCALE / 5))
-                screen.blit(wpmsurface, (newx, SCREEN_HEIGHT * SCALE - 200))
+                screen.blit(textsurface, (x, SCREEN.current_h * SCALE / 5))
+                screen.blit(wpmsurface, (newx, SCREEN.current_h * SCALE - 200))
 
                 pygame.display.flip()
 
@@ -219,10 +220,12 @@ def pasteorsearch(pors):
 
 def main():
     pygame.init()
+    SCREEN = pygame.display.Info()
     os.environ['SDL_VIDEO_CENTERED'] = '1'
     pygame.display.set_caption("Rollick Reader")
     pygame.display.set_icon(pygame.image.load('rollickboonlogo.jpg'))
-    screen = pygame.display.set_mode((SCREEN_WIDTH * SCALE, SCREEN_HEIGHT * SCALE))
+    # screen = pygame.display.set_mode((SCREEN.current_w * SCALE, SCREEN.current_h * SCALE))
+    screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
 
     pygame.font.init()
     startFont = pygame.font.SysFont('Helvetica', 30)
@@ -234,16 +237,16 @@ def main():
     starttextsurface3 = startFont.render("Reader", 1, (color))
 
     #calculate the center of the word
-    x = ((SCREEN_WIDTH / 2) * SCALE - (starttextsurface.get_rect().width / 2))
-    x1 = ((SCREEN_WIDTH / 2) * SCALE - (starttextsurface1.get_rect().width / 2))
-    x2 = ((SCREEN_WIDTH / 2) * SCALE - (starttextsurface2.get_rect().width / 2))
-    x3 = ((SCREEN_WIDTH / 2) * SCALE - (starttextsurface3.get_rect().width / 2))
+    x = ((SCREEN.current_w / 2) * SCALE - (starttextsurface.get_rect().width / 2))
+    x1 = ((SCREEN.current_w / 2) * SCALE - (starttextsurface1.get_rect().width / 2))
+    x2 = ((SCREEN.current_w / 2) * SCALE - (starttextsurface2.get_rect().width / 2))
+    x3 = ((SCREEN.current_w / 2) * SCALE - (starttextsurface3.get_rect().width / 2))
 
     #display the text
-    screen.blit(starttextsurface, (x, SCREEN_HEIGHT * SCALE / 5))
-    screen.blit(starttextsurface1, (x1, SCREEN_HEIGHT * SCALE / 5 + 35))
-    screen.blit(starttextsurface2, (x2, SCREEN_HEIGHT * SCALE / 5 + 70))
-    screen.blit(starttextsurface3, (x3, SCREEN_HEIGHT * SCALE / 5 + 105))
+    screen.blit(starttextsurface, (x, SCREEN.current_h * SCALE / 5))
+    screen.blit(starttextsurface1, (x1, SCREEN.current_h * SCALE / 5 + 35))
+    screen.blit(starttextsurface2, (x2, SCREEN.current_h * SCALE / 5 + 70))
+    screen.blit(starttextsurface3, (x3, SCREEN.current_h * SCALE / 5 + 105))
 
     pygame.display.flip()
 
@@ -252,11 +255,11 @@ def main():
     starttextsurface = startFont.render("Created by:", 1, (color))
     starttextsurface1 = startFont.render("David Shelby", 1, (color))
 
-    x = ((SCREEN_WIDTH / 2) * SCALE - (starttextsurface.get_rect().width / 2))
-    x1 = ((SCREEN_WIDTH / 2) * SCALE - (starttextsurface1.get_rect().width / 2))
+    x = ((SCREEN.current_w / 2) * SCALE - (starttextsurface.get_rect().width / 2))
+    x1 = ((SCREEN.current_w / 2) * SCALE - (starttextsurface1.get_rect().width / 2))
 
-    screen.blit(starttextsurface, (x, SCREEN_HEIGHT * SCALE / 5 + 205))
-    screen.blit(starttextsurface1, (x1, SCREEN_HEIGHT * SCALE / 5 + 240))
+    screen.blit(starttextsurface, (x, SCREEN.current_h * SCALE / 5 + 205))
+    screen.blit(starttextsurface1, (x1, SCREEN.current_h * SCALE / 5 + 240))
 
     pygame.display.flip()
 
