@@ -19,7 +19,7 @@ color = (255, 255, 255)
 #set variables
 i = 0
 
-def speedreader(textDoc):
+def speedreader():
 
     running = True
     clock = pygame.time.Clock()
@@ -27,7 +27,7 @@ def speedreader(textDoc):
     white = (255, 255, 255)
     black = (0, 0, 0)
     rbLogo = pygame.image.load('rollickboonlogo.jpg')
-    textDoc += " @FIN@"
+    textDoc = 'sample_text.txt'
 
     while True:
         clock.tick(60)
@@ -51,38 +51,43 @@ def speedreader(textDoc):
             os.environ['SDL_VIDEO_CENTERED'] = '1'
             pygame.display.set_caption("Rollick Reader")
             pygame.display.set_icon(rbLogo)
-            screen = pygame.display.set_mode((SCREEN.current_w * SCALE, SCREEN.current_h * SCALE))
+            screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
 
-            if color == white:
-                screen.fill(black)
-
-            if color == black:
-                screen.fill(white)
+            # if color == white:
+            #     screen.fill(black)
+            #
+            # if color == black:
+            #     screen.fill(white)
 
             corner1 = (25, SCREEN.current_h * SCALE - 75)  #Top Left corner of button 1
-            corner2 = (SCREEN.current_w * SCALE - 125, SCREEN.current_h * SCALE - 75)  #Top Left corner of button 2
+            corner2 = (SCREEN.current_w * SCALE / 2 - 125, SCREEN.current_h * SCALE - 75)  #Top Left corner of button 2
 
             corner3 = (25, SCREEN.current_h * SCALE - 150)  #Top Left corner of button 1
-            corner4 = (SCREEN.current_w * SCALE - 125, SCREEN.current_h * SCALE - 150)  #Top Left corner of button 2
+            corner4 = (SCREEN.current_w * SCALE / 2 - 125, SCREEN.current_h * SCALE - 150)  #Top Left corner of button 2
 
             #draw lines on the screen
-            pygame.draw.line(screen, (color), (0, SCREEN.current_h * SCALE / 5 - 30), (SCREEN.current_w * SCALE, SCREEN.current_h * SCALE / 5 - 30), 1)
-            pygame.draw.line(screen, (color), (0, SCREEN.current_h * SCALE / 5 + 30 + 40), (SCREEN.current_w * SCALE, SCREEN.current_h * SCALE / 5 + 30 + 40), 1)
-            pygame.draw.line(screen, (color), (SCREEN.current_w * SCALE / 2, SCREEN.current_h * SCALE / 5 - 30), (SCREEN.current_w * SCALE / 2, SCREEN.current_h * SCALE / 5 - 20), 1)
-            pygame.draw.line(screen, (color), (SCREEN.current_w * SCALE / 2, SCREEN.current_h * SCALE / 5 + 30 + 40), (SCREEN.current_w * SCALE / 2, SCREEN.current_h * SCALE / 5 + 20 + 40), 1)
+            pygame.draw.line(screen, (color), (0, SCREEN.current_h * SCALE / 5 - 30), (SCREEN.current_w * SCALE / 2, SCREEN.current_h * SCALE / 5 - 30),   1)
+            pygame.draw.line(screen, (color), (0, SCREEN.current_h * SCALE / 5 + 30 + 40), (SCREEN.current_w * SCALE / 2, SCREEN.current_h * SCALE / 5 + 30 + 40), 1)
+            pygame.draw.line(screen, (color), (SCREEN.current_w * SCALE / 4, SCREEN.current_h * SCALE / 5 - 30), (SCREEN.current_w * SCALE / 4, SCREEN.current_h * SCALE / 5 - 20), 1)
+            pygame.draw.line(screen, (color), (SCREEN.current_w * SCALE / 4, SCREEN.current_h * SCALE / 5 + 30 + 40), (SCREEN.current_w * SCALE / 4, SCREEN.current_h * SCALE / 5 + 20 + 40), 1)
+
+            pygame.draw.line(screen, (color), (SCREEN.current_w * SCALE / 2, 0), (SCREEN.current_w * SCALE / 2, SCREEN.current_h), 1)
 
             #draw the buttons
             pygame.draw.rect(screen, (0, 0, 0), (25, SCREEN.current_h * SCALE - 75, 100, 50), 0)
-            pygame.draw.rect(screen, (255, 255, 255), (SCREEN.current_w * SCALE - 125, SCREEN.current_h * SCALE - 75, 100, 50), 0)
+            pygame.draw.rect(screen, (255, 255, 255), (SCREEN.current_w * SCALE / 2 - 125, SCREEN.current_h * SCALE - 75, 100, 50), 0)
 
             pygame.draw.rect(screen, (255, 0, 0), (25, SCREEN.current_h * SCALE - 150, 100, 50), 0)
-            pygame.draw.rect(screen, (0, 255, 0), (SCREEN.current_w * SCALE - 125, SCREEN.current_h * SCALE - 150, 100, 50), 0)
+            pygame.draw.rect(screen, (0, 255, 0), (SCREEN.current_w * SCALE / 2 - 125, SCREEN.current_h * SCALE - 150, 100, 50), 0)
+
+            pygame.display.flip()
+            sleep(30)
 
             #initialize font
-            pygame.font.init()
-            speedFont = pygame.font.SysFont('Helvetica', 30)
-            otherSpeedFont = pygame.font.SysFont('Helvetica', 18)
-            word = ""
+            # pygame.font.init()
+            # speedFont = pygame.font.SysFont('Helvetica', 30)
+            # otherSpeedFont = pygame.font.SysFont('Helvetica', 18)
+            # word = ""
 
             # while i < 6:
             #     i = 5
@@ -94,56 +99,56 @@ def speedreader(textDoc):
             #
             # i = 0
 
-            try:
-                #loop to create each word
-                while textDoc[i] != " ":
-                    word = word + textDoc[i]
-                    i = i + 1
-                    if textDoc[i] == "\n":
-                        i = i + 1
-
-            except:
-                #don't error out at the end of the file
-                word = "FIN"
-
-                #create a textsurface
-                textsurface = speedFont.render(word, 1, (color))
-
-                #calculate the center of the word
-                x = ((SCREEN.current_w / 2) * SCALE - (textsurface.get_rect().width / 2))
-
-                #display the text
-                screen.blit(textsurface, (x, SCREEN.current_h * SCALE / 5))
-                pygame.display.flip()
-
-            #repeat until the end of the file
-            if word != "FIN":
-
-                wpm = 60 / speed
-
-                #create a textsurface
-                textsurface = speedFont.render(word, 1, (color))
-                wpmsurface = otherSpeedFont.render(str(round(wpm, -1)) + " words per minute", 1, (color))
-
-                #calculate the center of the word
-                x = ((SCREEN.current_w / 2) * SCALE - (textsurface.get_rect().width / 2))
-                newx = ((SCREEN.current_w / 2) * SCALE - (wpmsurface.get_rect().width / 2))
-
-                #display the text
-                screen.blit(textsurface, (x, SCREEN.current_h * SCALE / 5))
-                screen.blit(wpmsurface, (newx, SCREEN.current_h * SCALE - 200))
-
-                pygame.display.flip()
-
-                #display the word in a readable manner in the console window
-                if debug:
-                    print "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
-                    print word
-
-                #wait before going again
-
-                sleep(speed)
-                i = i + 1
+            # try:
+            #     #loop to create each word
+            #     while textDoc[i] != " ":
+            #         word = word + textDoc[i]
+            #         i = i + 1
+            #         if textDoc[i] == "\n":
+            #             i = i + 1
+            #
+            # except:
+            #     #don't error out at the end of the file
+            #     word = "FIN"
+            #
+            #     #create a textsurface
+            #     textsurface = speedFont.render(word, 1, (color))
+            #
+            #     #calculate the center of the word
+            #     x = ((SCREEN.current_w / 2) * SCALE - (textsurface.get_rect().width / 2))
+            #
+            #     #display the text
+            #     screen.blit(textsurface, (x, SCREEN.current_h * SCALE / 5))
+            #     pygame.display.flip()
+            #
+            # #repeat until the end of the file
+            # if word != "FIN":
+            #
+            #     wpm = 60 / speed
+            #
+            #     #create a textsurface
+            #     textsurface = speedFont.render(word, 1, (color))
+            #     wpmsurface = otherSpeedFont.render(str(round(wpm, -1)) + " words per minute", 1, (color))
+            #
+            #     #calculate the center of the word
+            #     x = ((SCREEN.current_w / 2) * SCALE - (textsurface.get_rect().width / 2))
+            #     newx = ((SCREEN.current_w / 2) * SCALE - (wpmsurface.get_rect().width / 2))
+            #
+            #     #display the text
+            #     screen.blit(textsurface, (x, SCREEN.current_h * SCALE / 5))
+            #     screen.blit(wpmsurface, (newx, SCREEN.current_h * SCALE - 200))
+            #
+            #     pygame.display.flip()
+            #
+            #     #display the word in a readable manner in the console window
+            #     if debug:
+            #         print "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
+            #         print word
+            #
+            #     #wait before going again
+            #
+            #     sleep(speed)
+            #     i = i + 1
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -228,7 +233,7 @@ def main():
     screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
 
     pygame.font.init()
-    startFont = pygame.font.SysFont('Helvetica', 30)
+    startFont = pygame.font.SysFont('Audiowide.ttf', 85)
 
     #create a textsurface
     starttextsurface = startFont.render("Welcome", 1, (color))
@@ -244,9 +249,11 @@ def main():
 
     #display the text
     screen.blit(starttextsurface, (x, SCREEN.current_h * SCALE / 5))
-    screen.blit(starttextsurface1, (x1, SCREEN.current_h * SCALE / 5 + 35))
-    screen.blit(starttextsurface2, (x2, SCREEN.current_h * SCALE / 5 + 70))
-    screen.blit(starttextsurface3, (x3, SCREEN.current_h * SCALE / 5 + 105))
+    screen.blit(starttextsurface1, (x1, SCREEN.current_h * SCALE / 5 + 60))
+    screen.blit(starttextsurface2, (x2, SCREEN.current_h * SCALE / 5 + 120))
+    screen.blit(starttextsurface3, (x3, SCREEN.current_h * SCALE / 5 + 180))
+
+    sleep(1)
 
     pygame.display.flip()
 
@@ -258,45 +265,49 @@ def main():
     x = ((SCREEN.current_w / 2) * SCALE - (starttextsurface.get_rect().width / 2))
     x1 = ((SCREEN.current_w / 2) * SCALE - (starttextsurface1.get_rect().width / 2))
 
-    screen.blit(starttextsurface, (x, SCREEN.current_h * SCALE / 5 + 205))
-    screen.blit(starttextsurface1, (x1, SCREEN.current_h * SCALE / 5 + 240))
+    screen.blit(starttextsurface, (x, SCREEN.current_h * SCALE / 5 + 280))
+    screen.blit(starttextsurface1, (x1, SCREEN.current_h * SCALE / 5 + 340))
 
     pygame.display.flip()
 
     sleep(2)
 
+    screen.fill((0, 0, 0))
+    pygame.display.update()
+
     pygame.display.quit()
 
-    root = Tk()
-    root.iconbitmap(default = 'rollickboonlogo.ico')
-    root.title("Rollick Reader")
-
-    # Add a grid
-    mainframe = Frame(root)
-    mainframe.grid(column = 0,row = 0, sticky = (N, W, E, S ))
-    mainframe.columnconfigure(0, weight = 1)
-    mainframe.rowconfigure(0, weight = 1)
-    mainframe.pack(pady = 25, padx = 50)
-
-    # Create a Tkinter variable
-    tkvar = StringVar(root)
-
-    # Dictionary with options
-    choices = {'Paste', 'Search', 'Choose Value'}
-    popupMenu = OptionMenu(mainframe, tkvar, *choices)
-    Label(mainframe, text="Would you like to paste or search the device for your desired text?").grid(row = 1, column = 1)
-    popupMenu.grid(row = 2, column = 1)
-    tkvar.set('Choose Value') # set the default option
-    button = ttk.Button(mainframe, text ="Select", command = lambda: pasteorsearch(tkvar.get()))
-    button.grid(row = 3, column = 1)
-
-    # on change dropdown value
-    # def change_dropdown(*args):
-        # print(tkvar.get())
-
-    # link function to change dropdown
-    # tkvar.trace('w', change_dropdown)
-
-    root.mainloop()
+    # root = Tk()
+    # root.iconbitmap(default = 'rollickboonlogo.ico')
+    # root.title("Rollick Reader")
+    #
+    # # Add a grid
+    # mainframe = Frame(root)
+    # mainframe.grid(column = 0,row = 0, sticky = (N, W, E, S ))
+    # mainframe.columnconfigure(0, weight = 1)
+    # mainframe.rowconfigure(0, weight = 1)
+    # mainframe.pack(pady = 25, padx = 50)
+    #
+    # # Create a Tkinter variable
+    # tkvar = StringVar(root)
+    #
+    # # Dictionary with options
+    # choices = {'Paste', 'Search', 'Choose Value'}
+    # popupMenu = OptionMenu(mainframe, tkvar, *choices)
+    # Label(mainframe, text="Would you like to paste or search the device for your desired text?").grid(row = 1, column = 1)
+    # popupMenu.grid(row = 2, column = 1)
+    # tkvar.set('Choose Value') # set the default option
+    # button = ttk.Button(mainframe, text ="Select", command = lambda: pasteorsearch(tkvar.get()))
+    # button.grid(row = 3, column = 1)
+    #
+    # # on change dropdown value
+    # # def change_dropdown(*args):
+    #     # print(tkvar.get())
+    #
+    # # link function to change dropdown
+    # # tkvar.trace('w', change_dropdown)
+    #
+    # root.mainloop()
+    speedreader()
 
 main()
