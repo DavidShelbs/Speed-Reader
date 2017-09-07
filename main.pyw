@@ -42,13 +42,6 @@ def speedreader():
 
             debug = False
 
-            image_length = 100 #length of the buttons
-            image_height = 50 #height of the buttons
-
-            grey = (50, 50, 50)
-            darkGrey = (25, 25, 25)
-            vDarkGrey = (10, 10, 10)
-
             #initialize pygame and set display for the window
             pygame.init()
             SCREEN = pygame.display.Info()
@@ -56,7 +49,15 @@ def speedreader():
             pygame.display.set_caption("Rollick Reader")
             pygame.display.set_icon(rbLogo)
             screen = pygame.display.set_mode((800, 600))
-            screen.fill(darkGrey)
+
+            image_length = SCREEN.current_w * .75 / 4 #length of the buttons
+            image_height = 25 #height of the buttons
+
+            grey = (50, 50, 50)
+            darkGrey = (25, 25, 25)
+            vDarkGrey = (15, 15, 15)
+
+            screen.fill(white)
 
             if color == white:
                 screen.fill(black)
@@ -64,8 +65,8 @@ def speedreader():
             if color == black:
                 screen.fill(white)
 
-            corner1 = (25, SCREEN.current_h * SCALE - 75)  #Top Left corner of button 1
-            corner2 = (SCREEN.current_w * SCALE * .75 - 125, SCREEN.current_h * SCALE - 75)  #Top Left corner of button 2
+            corner1 = (SCREEN.current_w * .75 - SCREEN.current_w * .75, SCREEN.current_h * SCALE / 2)  #Top Left corner of button 1
+            corner2 = (SCREEN.current_w * .75 - SCREEN.current_w * .75 * .75, SCREEN.current_h * SCALE / 2)  #Top Left corner of button 2
 
             corner3 = (25, SCREEN.current_h * SCALE - 150)  #Top Left corner of button 1
             corner4 = (SCREEN.current_w * SCALE * .75 - 125, SCREEN.current_h * SCALE - 150)  #Top Left corner of button 2
@@ -80,13 +81,15 @@ def speedreader():
             pygame.draw.rect(screen, (grey), (0, SCREEN.current_h * SCALE / 2, SCREEN.current_w * .75 - 1, SCREEN.current_h / 2), 0)
 
             #draw the buttons
-            pygame.draw.rect(screen, (0, 0, 255), (SCREEN.current_w * .75 - SCREEN.current_w * .75, SCREEN.current_h * SCALE / 2, SCREEN.current_w * .75 / 4, 25), 0)
-            pygame.draw.rect(screen, (0, 255, 0), (SCREEN.current_w * .75 - SCREEN.current_w * .75 * .75, SCREEN.current_h * SCALE / 2, SCREEN.current_w * .75 / 4, 25), 0)
+            pygame.draw.rect(screen, (255, 255, 255), (SCREEN.current_w * .75 - SCREEN.current_w * .75, SCREEN.current_h * SCALE / 2, image_length, image_height), 0)
+            pygame.draw.rect(screen, (255, 255, 255), (SCREEN.current_w * .75 - SCREEN.current_w * .75 * .75, SCREEN.current_h * SCALE / 2, image_length, image_height), 0)
 
-            pygame.draw.rect(screen, (255, 0, 0), (SCREEN.current_w * .75 - SCREEN.current_w * .75 / 2, SCREEN.current_h * SCALE / 2, SCREEN.current_w * .75 / 4, 25), 0)
-            pygame.draw.rect(screen, (0, 255, 255), (SCREEN.current_w * .75 - SCREEN.current_w * .75 * .25, SCREEN.current_h * SCALE / 2, SCREEN.current_w * .75 / 4, 25), 0)
+            pygame.draw.rect(screen, (255, 255, 255), (SCREEN.current_w * .75 - SCREEN.current_w * .75 / 2, SCREEN.current_h * SCALE / 2, image_length, image_height), 0)
+            pygame.draw.rect(screen, (255, 255, 255), (SCREEN.current_w * .75 - SCREEN.current_w * .75 * .25, SCREEN.current_h * SCALE / 2, image_length, image_height), 0)
 
             pygame.draw.line(screen, (vDarkGrey), (SCREEN.current_w * SCALE * .75, 0), (SCREEN.current_w * SCALE * .75, SCREEN.current_h), 3)
+            pygame.draw.line(screen, (vDarkGrey), (1, 0), (1, SCREEN.current_h), 3)
+            pygame.draw.line(screen, (vDarkGrey), (0, SCREEN.current_h - 2), (SCREEN.current_w, SCREEN.current_h - 2), 3)
 
             pygame.draw.line(screen, (vDarkGrey), (0, SCREEN.current_h * SCALE / 2 - 2), (SCREEN.current_w * SCALE * .75, SCREEN.current_h * SCALE / 2 - 2), 3)
 
@@ -124,7 +127,7 @@ def speedreader():
                 textsurface = speedFont.render(word, 1, (color))
 
                 #calculate the center of the word
-                x = ((SCREEN.current_w / 2) * SCALE - (textsurface.get_rect().width / 2))
+                x = ((SCREEN.current_w * .75/ 2) * SCALE - (textsurface.get_rect().width / 2))
 
                 #display the text
                 screen.blit(textsurface, (x, SCREEN.current_h * SCALE / 5))
@@ -140,8 +143,8 @@ def speedreader():
                 wpmsurface = otherSpeedFont.render(str(round(wpm, -1)) + " words per minute", 1, (color))
 
                 #calculate the center of the word
-                x = ((SCREEN.current_w / 2) * SCALE - (textsurface.get_rect().width / 2))
-                newx = ((SCREEN.current_w / 2) * SCALE - (wpmsurface.get_rect().width / 2))
+                x = ((SCREEN.current_w * .75/ 2) * SCALE - (textsurface.get_rect().width / 2))
+                newx = ((SCREEN.current_w * .75/ 2) * SCALE - (textsurface.get_rect().width / 2))
 
                 #display the text
                 screen.blit(textsurface, (x, SCREEN.current_h * SCALE / 5))
@@ -167,10 +170,10 @@ def speedreader():
                     if event.button == 1:
                         mouse_x, mouse_y = event.pos
                         if (mouse_x >= corner1[0]) and (mouse_x <= corner1[0]+image_length) and (mouse_y >= corner1[1]) and (mouse_y <= corner1[1]+image_height):
-                            color = white
+                            color = black
 
                         elif (mouse_x >= corner2[0]) and (mouse_x <= corner2[0]+image_length) and (mouse_y >= corner2[1]) and (mouse_y <= corner2[1]+image_height):
-                            color = black
+                            color = white
 
                         elif (mouse_x >= corner3[0]) and (mouse_x <= corner3[0]+image_length) and (mouse_y >= corner3[1]) and (mouse_y <= corner3[1]+image_height):
                             speed = speed + 0.02
@@ -183,7 +186,6 @@ def speedreader():
                                 print "Speed", speed
 
                         else:
-                            color = (255, 255, 255)
                             if debug:
                                 print ("That's not a button")
                             button1=False
