@@ -55,14 +55,14 @@ def speedreader():
             os.environ['SDL_VIDEO_CENTERED'] = '1'
             pygame.display.set_caption("Rollick Reader")
             pygame.display.set_icon(rbLogo)
-            screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
+            screen = pygame.display.set_mode((800, 600))
             screen.fill(darkGrey)
 
-            # if color == white:
-            #     screen.fill(black)
-            #
-            # if color == black:
-            #     screen.fill(white)
+            if color == white:
+                screen.fill(black)
+
+            if color == black:
+                screen.fill(white)
 
             corner1 = (25, SCREEN.current_h * SCALE - 75)  #Top Left corner of button 1
             corner2 = (SCREEN.current_w * SCALE * .75 - 125, SCREEN.current_h * SCALE - 75)  #Top Left corner of button 2
@@ -77,26 +77,26 @@ def speedreader():
             pygame.draw.line(screen, (vDarkGrey), (SCREEN.current_w * SCALE * (.75 / 2), SCREEN.current_h * SCALE / 4 - 70), (SCREEN.current_w * SCALE * (.75 / 2), SCREEN.current_h * SCALE / 4 - 50), 3)
             pygame.draw.line(screen, (vDarkGrey), (SCREEN.current_w * SCALE * (.75 / 2), SCREEN.current_h * SCALE / 4 + 70), (SCREEN.current_w * SCALE * (.75 / 2), SCREEN.current_h * SCALE / 4 + 50), 3)
 
+            pygame.draw.rect(screen, (grey), (0, SCREEN.current_h * SCALE / 2, SCREEN.current_w * .75 - 1, SCREEN.current_h / 2), 0)
+
+            #draw the buttons
+            pygame.draw.rect(screen, (0, 0, 255), (SCREEN.current_w * .75 - SCREEN.current_w * .75, SCREEN.current_h * SCALE / 2, SCREEN.current_w * .75 / 4, 25), 0)
+            pygame.draw.rect(screen, (0, 255, 0), (SCREEN.current_w * .75 - SCREEN.current_w * .75 * .75, SCREEN.current_h * SCALE / 2, SCREEN.current_w * .75 / 4, 25), 0)
+
+            pygame.draw.rect(screen, (255, 0, 0), (SCREEN.current_w * .75 - SCREEN.current_w * .75 / 2, SCREEN.current_h * SCALE / 2, SCREEN.current_w * .75 / 4, 25), 0)
+            pygame.draw.rect(screen, (0, 255, 255), (SCREEN.current_w * .75 - SCREEN.current_w * .75 * .25, SCREEN.current_h * SCALE / 2, SCREEN.current_w * .75 / 4, 25), 0)
+
             pygame.draw.line(screen, (vDarkGrey), (SCREEN.current_w * SCALE * .75, 0), (SCREEN.current_w * SCALE * .75, SCREEN.current_h), 3)
 
             pygame.draw.line(screen, (vDarkGrey), (0, SCREEN.current_h * SCALE / 2 - 2), (SCREEN.current_w * SCALE * .75, SCREEN.current_h * SCALE / 2 - 2), 3)
 
-            pygame.draw.rect(screen, (grey), (0, SCREEN.current_h * SCALE / 2, SCREEN.current_w * .75 - 1, SCREEN.current_h / 2), 0)
-
-            #draw the buttons
-            pygame.draw.rect(screen, (0, 0, 0), (50, SCREEN.current_h * SCALE / 2 + 25, 150, 50), 0)
-            pygame.draw.rect(screen, (0, 0, 0), (2 * (SCREEN.current_w * .75 / 4) - 300, SCREEN.current_h * SCALE / 2 + 25, 150, 50), 0)
-
-            pygame.draw.rect(screen, (0, 0, 0), (3 * (SCREEN.current_w * .75 / 4) - 200, SCREEN.current_h * SCALE / 2 + 25, 150, 50), 0)
-            pygame.draw.rect(screen, (0, 0, 0), (4 * (SCREEN.current_w * .75 / 4) - 200, SCREEN.current_h * SCALE / 2 + 25, 150, 50), 0)
             pygame.display.flip()
-            sleep(30)
 
-            #initialize font
-            # pygame.font.init()
-            # speedFont = pygame.font.SysFont('Helvetica', 30)
-            # otherSpeedFont = pygame.font.SysFont('Helvetica', 18)
-            # word = ""
+            # initialize font
+            pygame.font.init()
+            speedFont = pygame.font.SysFont('Helvetica', 30)
+            otherSpeedFont = pygame.font.SysFont('Helvetica', 18)
+            word = ""
 
             # while i < 6:
             #     i = 5
@@ -105,59 +105,59 @@ def speedreader():
             #     screen.blit(startsurface, (newxx, SCREEN.current_h * SCALE / 5))
             #     pygame.display.flip()
             #     i = i - 1
-            #
-            # i = 0
 
-            # try:
-            #     #loop to create each word
-            #     while textDoc[i] != " ":
-            #         word = word + textDoc[i]
-            #         i = i + 1
-            #         if textDoc[i] == "\n":
-            #             i = i + 1
-            #
-            # except:
-            #     #don't error out at the end of the file
-            #     word = "FIN"
-            #
-            #     #create a textsurface
-            #     textsurface = speedFont.render(word, 1, (color))
-            #
-            #     #calculate the center of the word
-            #     x = ((SCREEN.current_w / 2) * SCALE - (textsurface.get_rect().width / 2))
-            #
-            #     #display the text
-            #     screen.blit(textsurface, (x, SCREEN.current_h * SCALE / 5))
-            #     pygame.display.flip()
-            #
-            # #repeat until the end of the file
-            # if word != "FIN":
-            #
-            #     wpm = 60 / speed
-            #
-            #     #create a textsurface
-            #     textsurface = speedFont.render(word, 1, (color))
-            #     wpmsurface = otherSpeedFont.render(str(round(wpm, -1)) + " words per minute", 1, (color))
-            #
-            #     #calculate the center of the word
-            #     x = ((SCREEN.current_w / 2) * SCALE - (textsurface.get_rect().width / 2))
-            #     newx = ((SCREEN.current_w / 2) * SCALE - (wpmsurface.get_rect().width / 2))
-            #
-            #     #display the text
-            #     screen.blit(textsurface, (x, SCREEN.current_h * SCALE / 5))
-            #     screen.blit(wpmsurface, (newx, SCREEN.current_h * SCALE - 200))
-            #
-            #     pygame.display.flip()
-            #
-            #     #display the word in a readable manner in the console window
-            #     if debug:
-            #         print "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
-            #         print word
-            #
-            #     #wait before going again
-            #
-            #     sleep(speed)
-            #     i = i + 1
+            i = 0
+
+            try:
+                #loop to create each word
+                while textDoc[i] != " ":
+                    word = word + textDoc[i]
+                    i = i + 1
+                    if textDoc[i] == "\n":
+                        i = i + 1
+
+            except:
+                #don't error out at the end of the file
+                word = "FIN"
+
+                #create a textsurface
+                textsurface = speedFont.render(word, 1, (color))
+
+                #calculate the center of the word
+                x = ((SCREEN.current_w / 2) * SCALE - (textsurface.get_rect().width / 2))
+
+                #display the text
+                screen.blit(textsurface, (x, SCREEN.current_h * SCALE / 5))
+                pygame.display.flip()
+
+            #repeat until the end of the file
+            if word != "FIN":
+
+                wpm = 60 / speed
+
+                #create a textsurface
+                textsurface = speedFont.render(word, 1, (color))
+                wpmsurface = otherSpeedFont.render(str(round(wpm, -1)) + " words per minute", 1, (color))
+
+                #calculate the center of the word
+                x = ((SCREEN.current_w / 2) * SCALE - (textsurface.get_rect().width / 2))
+                newx = ((SCREEN.current_w / 2) * SCALE - (wpmsurface.get_rect().width / 2))
+
+                #display the text
+                screen.blit(textsurface, (x, SCREEN.current_h * SCALE / 5))
+                screen.blit(wpmsurface, (newx, SCREEN.current_h * SCALE - 200))
+
+                pygame.display.flip()
+
+                #display the word in a readable manner in the console window
+                if debug:
+                    print "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
+                    print word
+
+                #wait before going again
+
+                sleep(speed)
+                i = i + 1
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
