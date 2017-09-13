@@ -154,8 +154,8 @@ def speedreader():
 
                 #display the word in a readable manner in the console window
                 if debug:
-                    print "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
-                    print word
+                    print ("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
+                    print (word)
 
                 #wait before going again
 
@@ -178,12 +178,12 @@ def speedreader():
                         elif (mouse_x >= corner3[0]) and (mouse_x <= corner3[0]+image_length) and (mouse_y >= corner3[1]) and (mouse_y <= corner3[1]+image_height):
                             speed = speed + 0.02
                             if debug:
-                                print "Speed", speed
+                                print ("Speed", speed)
 
                         elif (mouse_x >= corner4[0]) and (mouse_x <= corner4[0]+image_length) and (mouse_y >= corner4[1]) and (mouse_y <= corner4[1]+image_height):
                             speed = speed - 0.02
                             if debug:
-                                print "Speed", speed
+                                print ("Speed", speed)
 
                         else:
                             if debug:
