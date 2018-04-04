@@ -53,6 +53,7 @@ def speedreader():
             image_length = SCREEN.current_w * .75 / 4 #length of the buttons
             image_height = 25 #height of the buttons
 
+            lightGrey = (75, 75, 75)
             grey = (50, 50, 50)
             darkGrey = (25, 25, 25)
             vDarkGrey = (15, 15, 15)
@@ -60,7 +61,7 @@ def speedreader():
             screen.fill(white)
 
             if color == white:
-                screen.fill(black)
+                screen.fill(darkGrey)
 
             if color == black:
                 screen.fill(white)
@@ -78,19 +79,19 @@ def speedreader():
             pygame.draw.line(screen, (vDarkGrey), (SCREEN.current_w * SCALE * (.75 / 2), SCREEN.current_h * SCALE / 4 - 70), (SCREEN.current_w * SCALE * (.75 / 2), SCREEN.current_h * SCALE / 4 - 50), 3)
             pygame.draw.line(screen, (vDarkGrey), (SCREEN.current_w * SCALE * (.75 / 2), SCREEN.current_h * SCALE / 4 + 70), (SCREEN.current_w * SCALE * (.75 / 2), SCREEN.current_h * SCALE / 4 + 50), 3)
 
-            pygame.draw.rect(screen, (grey), (0, SCREEN.current_h * SCALE / 2, SCREEN.current_w * .75 - 1, SCREEN.current_h / 2), 0)
+            # pygame.draw.rect(screen, (grey), (0, SCREEN.current_h * SCALE / 2, SCREEN.current_w * .75 - 1, SCREEN.current_h / 2), 0)
 
             #draw the buttons
-            pygame.draw.rect(screen, (255, 255, 255), (SCREEN.current_w * .75 - SCREEN.current_w * .75, SCREEN.current_h * SCALE / 2, image_length, image_height), 0)
-            pygame.draw.rect(screen, (255, 255, 255), (SCREEN.current_w * .75 - SCREEN.current_w * .75 * .75, SCREEN.current_h * SCALE / 2, image_length, image_height), 0)
+            pygame.draw.rect(screen, (lightGrey), (SCREEN.current_w * .75 - SCREEN.current_w * .75, SCREEN.current_h * SCALE / 2, image_length, image_height), 0)
+            pygame.draw.rect(screen, (grey), (SCREEN.current_w * .75 - SCREEN.current_w * .75 * .75, SCREEN.current_h * SCALE / 2, image_length, image_height), 0)
 
-            pygame.draw.rect(screen, (255, 255, 255), (SCREEN.current_w * .75 - SCREEN.current_w * .75 / 2, SCREEN.current_h * SCALE / 2, image_length, image_height), 0)
-            pygame.draw.rect(screen, (255, 255, 255), (SCREEN.current_w * .75 - SCREEN.current_w * .75 * .25, SCREEN.current_h * SCALE / 2, image_length, image_height), 0)
+            pygame.draw.rect(screen, (darkGrey), (SCREEN.current_w * .75 - SCREEN.current_w * .75 / 2, SCREEN.current_h * SCALE / 2, image_length, image_height), 0)
+            pygame.draw.rect(screen, (vDarkGrey), (SCREEN.current_w * .75 - SCREEN.current_w * .75 * .25, SCREEN.current_h * SCALE / 2, image_length, image_height), 0)
 
+            #extra lines
             pygame.draw.line(screen, (vDarkGrey), (SCREEN.current_w * SCALE * .75, 0), (SCREEN.current_w * SCALE * .75, SCREEN.current_h), 3)
             pygame.draw.line(screen, (vDarkGrey), (1, 0), (1, SCREEN.current_h), 3)
             pygame.draw.line(screen, (vDarkGrey), (0, SCREEN.current_h - 2), (SCREEN.current_w, SCREEN.current_h - 2), 3)
-
             pygame.draw.line(screen, (vDarkGrey), (0, SCREEN.current_h * SCALE / 2 - 2), (SCREEN.current_w * SCALE * .75, SCREEN.current_h * SCALE / 2 - 2), 3)
 
             pygame.display.flip()
